@@ -1,10 +1,13 @@
-import Native
-import Forward
+import os
+import sys
+sys.path.append(os.path.abspath('../modules'))
+from modules import speech
+from modules import forward
 
 
 def main():
-    Forward.a()
-    Native.b()
+    forward.a()
+    speech.b()
                                                 
 if __name__ == '__main__':
     main()
