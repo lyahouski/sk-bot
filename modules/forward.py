@@ -1,7 +1,9 @@
 from vk_api import VkUpload
 
-def main(session, vk_session, longpoll, vk, random_id, event):
+forward_desc = '/перешли + [изображение] - пересылка приложенного изображения'
 
+def main(session, vk_session, longpoll, vk, random_id, event):
+    
     if event.obj.text.lower() == '/перешли':
         if bool(event.obj.attachments):
             if event.obj.attachments[0]['type'] == 'photo':

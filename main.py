@@ -8,6 +8,7 @@ from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 sys.path.append(os.path.abspath('../modules'))
 from modules import speech
 from modules import forward
+from modules import support
 
 def main():
 
@@ -19,6 +20,8 @@ def main():
 
     longpoll = VkBotLongPoll(vk_session, 73935802)
     vk = vk_session.get_api()
+    
+    descDict = [forward.forward_desc]
     
     for event in longpoll.listen():
 
@@ -32,6 +35,7 @@ def main():
             
             forward.main(session, vk_session, longpoll, vk, random_id, event)
             speech.main(session, vk_session, longpoll, vk, random_id, event)
+            support.main(session, vk_session, longpoll, vk, random_id, event, descDict)
                                                 
 if __name__ == '__main__':
     main()

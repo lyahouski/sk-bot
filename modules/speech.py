@@ -1,5 +1,5 @@
 def main(session, vk_session, longpoll, vk, random_id, event):
-            
+    
     if event.obj.text.lower() == 'привет' or event.obj.text.lower() == 'спасибо':
         vk.messages.send(
             random_id=random_id,
