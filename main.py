@@ -2,6 +2,7 @@ import os
 import sys
 import requests
 from random import random
+import random as rand
 from vk_api import vk_api
 from vk_api import VkUpload
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
@@ -32,9 +33,12 @@ def main():
             print('Поступило сообщение')
             
             random_id = round(random() * 10 ** 9)
+            randomNumb = rand.randint(0, 1)
+            print(randomNumb)
             
             forward.main(session, vk_session, longpoll, vk, random_id, event)
-            speech.main(session, vk_session, longpoll, vk, random_id, event)
+            if randomNumb == 1: 
+                speech.main(session, vk_session, longpoll, vk, random_id, event)
             support.main(session, vk_session, longpoll, vk, random_id, event, descDict)
                                                 
 if __name__ == '__main__':
