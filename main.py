@@ -5,12 +5,15 @@ from random import random
 import random as rand
 from vk_api import vk_api
 from vk_api import VkUpload
+from vk_api.utils import get_random_id
+from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 sys.path.append(os.path.abspath('../modules'))
 from modules import speech
 from modules import forward
 from modules import support
 from modules import message_stats
+from modules import posting_form
 
 def main():
 
@@ -23,7 +26,11 @@ def main():
     longpoll = VkBotLongPoll(vk_session, 73935802)
     vk = vk_session.get_api()
     
-    descDict = [forward.forward_desc, message_stats.message_stats_desc]
+    descDict = [
+        forward.forward_desc,
+        message_stats.message_stats_desc,
+        posting_form.posting_desc
+    ]
     
     for event in longpoll.listen():
 
@@ -42,7 +49,7 @@ def main():
                 speech.main(session, vk_session, longpoll, vk, random_id, event)
             support.main(session, vk_session, longpoll, vk, random_id, event, descDict)
             message_stats.main(session, vk_session, longpoll, vk, random_id, event)
-            
-                                                
+            posting_form.main(session, vk_session, longpoll, vk, random_id, event)
+                                                         
 if __name__ == '__main__':
     main()

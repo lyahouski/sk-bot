@@ -2,101 +2,37 @@ def main(session, vk_session, longpoll, vk, random_id, event):
     
     speechDict = {
         'hello':{'question': 'привет', 'answer': 'Пошол ты нахуй'},
-        'flat':{'question': 'на флэте?', 'answer': 'ЭЭЭЭЙ НА ФЛЭЭЭТЕ'}
+        'thx':{'question': 'спасибо', 'answer': 'Пошол ты нахуй'},
+        'flat':{'question': 'на флэте?', 'answer': 'НА ФЛЭТЕ НАХУУУУУЙ 🤙'},
+        'rain':{'question': 'ливня?', 'answer': 'Долбоеб'},
+        'pray':{'question': 'помолимся', 'answer': 'video67219698_456244596'},
+        'understand?':{'question': 'понимаешь?', 'answer': 'photo-73935802_457240008'},
+        'understand':{'question': 'понимаю', 'answer': 'photo-73935802_457240008'},
+        'you':{'question': 'ты', 'answer': 'Пидор'},
+        'yes':{'question': 'да', 'answer': 'Пизда'},
+        'yes?':{'question': 'да?', 'answer': 'Пизда'},
+        'gn':{'question': 'спок', 'answer': 'Спок!'},
+        'aight':{'question': 'ладно', 'answer': 'Шоколадно, бля'},
+        'crazy':{'question': 'ебанутый', 'answer': 'photo-73935802_457240009'},
+        'popeye':{'question': 'попаянный', 'answer': 'photo-73935802_457240009'},
+        'su':{'question': 'закрой рот', 'answer': 'Лан'},
+        'stfu':{'question': 'завали ебало', 'answer': 'Лан'}
     }
 
-    for key in speechDict: 
-        print(key)
-        print(key.question)
-        print(key.answer)
-    
-    # if event.obj.text.lower() == 'привет' or event.obj.text.lower() == 'спасибо':
-    #     vk.messages.send(
-    #         random_id=random_id,
-    #         peer_id=event.obj.peer_id,
-    #         chat_id=event.chat_id,
-    #         message='Пошол ты нахуй'
-    #     )
-        
-    # if event.obj.text.lower() == 'на флэте?':
-    #     vk.messages.send(
-    #         random_id=random_id,
-    #         peer_id=event.obj.peer_id,
-    #         chat_id=event.chat_id,
-    #         message='ЭЭЭЭЙ НА ФЛЭЭЭТЕ'
-    #     )
-        
-    # if event.obj.text.lower() == 'ливня':
-    #     vk.messages.send(
-    #         random_id=random_id,
-    #         peer_id=event.obj.peer_id,
-    #         chat_id=event.chat_id,
-    #         message='Долбоеб'
-    #     )
-        
-    # if event.obj.text.lower() == 'помолимся':
-    #     vk.messages.send(
-    #         random_id=random_id,
-    #         peer_id=event.obj.peer_id,
-    #         chat_id=event.chat_id,
-    #         attachment='video67219698_456244596'
-    #     )
-        
-    # if event.obj.text.lower() == 'ты':
-    #     vk.messages.send(
-    #         random_id=random_id,
-    #         peer_id=event.obj.peer_id,
-    #         chat_id=event.chat_id,
-    #         message='Пидор'
-    #     )
-        
-    # if event.obj.text.lower() == 'да' or event.obj.text.lower() == 'да?':
-    #     vk.messages.send(
-    #         random_id=random_id,
-    #         peer_id=event.obj.peer_id,
-    #         chat_id=event.chat_id,
-    #         message='Пизда'
-    #     )
-        
-    # if event.obj.text.lower() == 'спок':
-    #     vk.messages.send(
-    #         random_id=random_id,
-    #         peer_id=event.obj.peer_id,
-    #         chat_id=event.chat_id,
-    #         message='Спок!'
-    #     )
-        
-    # if event.obj.text.lower() == 'ладно':
-    #     vk.messages.send(
-    #         random_id=random_id,
-    #         peer_id=event.obj.peer_id,
-    #         chat_id=event.chat_id,
-    #         message='Шоколадно бля'
-    #     )
-    
-    # if event.obj.text.lower() == 'понимаю' or event.obj.text.lower() == 'понимаешь?':
-    #     vk.messages.send(
-    #         random_id=random_id,
-    #         peer_id=event.obj.peer_id,
-    #         chat_id=event.chat_id,
-    #         attachment='photo-73935802_457240008'
-    #     )
-    
-    # if event.obj.text.lower() == 'ебанутый' or event.obj.text.lower() == 'попаянный':
-    #     vk.messages.send(
-    #         random_id=random_id,
-    #         peer_id=event.obj.peer_id,
-    #         chat_id=event.chat_id,
-    #         attachment='photo-73935802_457240009'
-    #     )
-    
-    # if event.obj.text.lower() == 'закрой рот' or event.obj.text.lower() == 'завали ебало':
-    #     vk.messages.send(
-    #         random_id=random_id,
-    #         peer_id=event.obj.peer_id,
-    #         chat_id=event.chat_id,
-    #         message='Лан'
-    #     )
+    for key, value in speechDict.items():
 
-# if __name__ == '__main__':
-#     b()
+        if event.obj.text.lower() == value['question']:
+                if value['answer'][0:5] == 'video' or value['answer'][0:5] == 'photo':
+                    inputAttach = value['answer']
+                    inputMessage = ''
+                else:
+                    inputAttach = ''
+                    inputMessage = value['answer']
+
+                vk.messages.send(
+                    random_id=random_id,
+                    peer_id=event.obj.peer_id,
+                    chat_id=event.chat_id,
+                    message=inputMessage,
+                    attachment=inputAttach
+                )
