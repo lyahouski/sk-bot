@@ -21,7 +21,7 @@ def main(session, vk_session, longpoll, vk, random_id, event):
 
     for key, value in speechDict.items():
 
-        if event.obj.text.lower() == value['question']:
+        if event.obj.message['text'].lower() == value['question']:
                 if value['answer'][0:5] == 'video' or value['answer'][0:5] == 'photo':
                     inputAttach = value['answer']
                     inputMessage = ''

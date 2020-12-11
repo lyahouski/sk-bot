@@ -4,7 +4,7 @@ message_stats_desc = '/статы - вывод сообщений за всё в
 
 def main(session, vk_session, longpoll, vk, random_id, event):
     
-    if event.obj.text.lower() == '/статы':
+    if event.obj.message['text'].lower() == '/статы':
         
         # allTimeCount = vk.messages.getHistory(
         #     peer_id=event.obj.peer_id
@@ -26,7 +26,7 @@ def main(session, vk_session, longpoll, vk, random_id, event):
         allTimeDate = int(dateEnd.strftime("%d%m%Y"))
         
         allTimeCount = vk.messages.search(
-            peer_id=event.obj.peer_id, 
+            peer_id=event.obj.message['peer_id'], 
             date=allTimeDate,
             q=''
         )

@@ -4,12 +4,12 @@ forward_desc = '/перешли + [изображение] - пересылка 
 
 def main(session, vk_session, longpoll, vk, random_id, event):
     
-    if event.obj.text.lower() == '/перешли':
-        if bool(event.obj.attachments):
-            if event.obj.attachments[0]['type'] == 'photo':
+    if event.obj.message['text'].lower() == '/перешли':
+        if bool(event.obj.message['attachments']):
+            if event.obj.message['attachments'][0]['type'] == 'photo':
                 upload = VkUpload(vk_session)
-                lastUrl = len(event.obj.attachments[0]['photo']['sizes']) - 1
-                sunLink = event.obj.attachments[0]['photo']['sizes'][lastUrl]['url']
+                lastUrl = len(event.obj.message['attachments'][0]['photo']['sizes']) - 1
+                sunLink = event.obj.message['attachments'][0]['photo']['sizes'][lastUrl]['url']
                 image = session.get(sunLink, stream=True)
                 photo = upload.photo_messages(photos=image.raw)[0]
                 attachment = 'photo{}_{}'.format(photo['owner_id'], photo['id'])

@@ -1,6 +1,6 @@
 def main(session, vk_session, longpoll, vk, random_id, event, descDict):
     
-    if event.obj.text.lower() == '/помощь' or event.obj.text.lower() == '/хелп':
+    if event.obj.message['text'].lower() == '/помощь' or event.obj.message['text'].lower() == '/хелп':
         
         descDict = "\n \n 🔵 ".join(descDict)
 

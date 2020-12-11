@@ -13,7 +13,7 @@ from modules import speech
 from modules import forward
 from modules import support
 from modules import message_stats
-from modules import posting_form
+# from modules import posting_form
 
 def main():
 
@@ -29,7 +29,7 @@ def main():
     descDict = [
         forward.forward_desc,
         message_stats.message_stats_desc,
-        posting_form.posting_desc
+        # posting_form.posting_desc
     ]
     
     for event in longpoll.listen():
@@ -49,7 +49,7 @@ def main():
                 speech.main(session, vk_session, longpoll, vk, random_id, event)
             support.main(session, vk_session, longpoll, vk, random_id, event, descDict)
             message_stats.main(session, vk_session, longpoll, vk, random_id, event)
-            posting_form.main(session, vk_session, longpoll, vk, random_id, event)
+            # posting_form.main(session, vk_session, longpoll, vk, random_id, event)
                                                          
 if __name__ == '__main__':
     main()
