@@ -1,55 +1,43 @@
-import os
-import sys
 import requests
-from random import random
-import random as rand
 from vk_api import vk_api
-from vk_api import VkUpload
-from vk_api.utils import get_random_id
-from vk_api.keyboard import VkKeyboard, VkKeyboardColor
+from datetime import datetime
+from loguru import logger as lg
+from modules.message_new import MessageNew
+from modules.message_typing import MessageTyping
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
-sys.path.append(os.path.abspath('../modules'))
-from modules import speech
-from modules import forward
-from modules import support
-from modules import message_stats
-# from modules import posting_form
 
-def main():
+class sk_bot():
+    def __init__(self):
+        lg.add("logs/{} session.log".format(datetime.now().strftime("%Y-%m-%d@%H-%M-%S")), 
+            format="{time:HH:mm:ss} | <level>{level: <8}</level> | {function} {line}: {message}", 
+            level="DEBUG")
 
-    print('Бот робит')
-    
-    session = requests.Session()
+        self.session = requests.Session()
+        self.vk_session = vk_api.VkApi(token="vk1.a.xKC-WYPQnJ6O4DYxC-UtudDjKEt21eSdrZe5Qk1aTz2GMkv_4pty5fUNLSrtUDpTzzuSSvaSscoMa97sSxH5ZqZ92qWAoXD5jzfcBUdPmWf5VYj8oi1xw4O2pDL8Gxd8EXpgrnlW8XgxJ2UzAKfNPdv8CCWkteKImekNsjFJDy6PNDsfhyN8fvqXwi8MSo2W")
+        self.longpoll = VkBotLongPoll(self.vk_session, 73935802)
+        self.vk = self.vk_session.get_api()
 
-    vk_session = vk_api.VkApi(token='0ea77560657fcb9c2b97078030a80473860b4ee440cc9f20edc0f413e6e8637c5db672e0acbe589bcf15d')
+    def main(self):
+        lg.info("Бот запущен")
+        
+        while True:
+            for event in self.longpoll.listen():
+                lg.info("Произошло событие")
 
-    longpoll = VkBotLongPoll(vk_session, 73935802)
-    vk = vk_session.get_api()
-    
-    descDict = [
-        forward.forward_desc,
-        message_stats.message_stats_desc,
-        # posting_form.posting_desc
-    ]
-    
-    for event in longpoll.listen():
+                if event.type == VkBotEventType.MESSAGE_TYPING_STATE:
+                    lg.info("Происходит набор сообщения")
 
-        print('Произошла прослушка')
+                    MessageTyping(self.vk, event)
 
-        if event.type == VkBotEventType.MESSAGE_NEW:
-            
-            print('Поступило сообщение')
-            
-            random_id = round(random() * 10 ** 9)
-            randomNumb = rand.randint(0, 1)
-            print(randomNumb)
-            
-            forward.main(session, vk_session, longpoll, vk, random_id, event)
-            if randomNumb == 1: 
-                speech.main(session, vk_session, longpoll, vk, random_id, event)
-            support.main(session, vk_session, longpoll, vk, random_id, event, descDict)
-            message_stats.main(session, vk_session, longpoll, vk, random_id, event)
-            # posting_form.main(session, vk_session, longpoll, vk, random_id, event)
-                                                         
-if __name__ == '__main__':
-    main()
+                if event.type == VkBotEventType.MESSAGE_NEW:
+                    lg.info("Поступило сообщение")
+                    
+                    MessageNew(self.session, self.vk_session, self.vk, event)
+
+if __name__ == "__main__":
+    while True:
+        try:
+            sk_bot().main()
+        except:
+            lg.error("Шота навернулось")
+            lg.exception("exception")
