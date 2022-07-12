@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+#coding=utf-8
+
 import requests
 from vk_api import vk_api
 from datetime import datetime
